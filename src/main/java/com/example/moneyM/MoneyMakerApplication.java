@@ -8,6 +8,9 @@ public class MoneyMakerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MoneyMakerApplication.class, args);
+		
+		//test commit
+		
 	}
 
 }
