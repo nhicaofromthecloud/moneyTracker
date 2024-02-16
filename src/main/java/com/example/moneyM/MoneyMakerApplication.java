@@ -17,6 +17,7 @@ public class MoneyMakerApplication {
 		//new comment
 		
 		//Mirna's comment
+		//new comment
 	}
 
 }
