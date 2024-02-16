@@ -15,6 +15,8 @@ public class MoneyMakerApplication {
 		
 		//4th commit test
 		//new comment
+		
+		//Mirna's comment
 	}
 
 }
