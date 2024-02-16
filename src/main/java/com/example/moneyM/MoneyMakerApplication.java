@@ -10,7 +10,8 @@ public class MoneyMakerApplication {
 		SpringApplication.run(MoneyMakerApplication.class, args);
 		
 		//test commit
-		
+		//this from another branch
+		//123
 	}
 
 }
