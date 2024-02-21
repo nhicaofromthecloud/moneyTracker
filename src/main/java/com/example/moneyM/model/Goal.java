@@ -8,7 +8,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.Date;
+
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "goals")
@@ -32,15 +34,15 @@ public class Goal {
     private Double currentAmount;
 
     @Column(name = "startDate")
-    private Date startDate;
+    private LocalDate startDate;
 
     @Column(name = "targetDate")
-    private Date targetDate;
+    private LocalDate targetDate;
 
     public Goal() {
     }
 
-    public Goal(UserAccount userAccount, String name, Double targetAmount, Double currentAmount, Date startDate, Date targetDate) {
+    public Goal(UserAccount userAccount, String name, Double targetAmount, Double currentAmount, LocalDate startDate, LocalDate targetDate) {
         this.userAccount = userAccount;
         this.name = name;
         this.targetAmount = targetAmount;
@@ -89,19 +91,19 @@ public class Goal {
 		this.currentAmount = currentAmount;
 	}
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getTargetDate() {
+	public LocalDate getTargetDate() {
 		return targetDate;
 	}
 
-	public void setTargetDate(Date targetDate) {
+	public void setTargetDate(LocalDate targetDate) {
 		this.targetDate = targetDate;
 	}
 
