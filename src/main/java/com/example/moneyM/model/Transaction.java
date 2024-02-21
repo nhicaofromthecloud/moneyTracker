@@ -9,7 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.Date;
+
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "transactions")
@@ -34,7 +36,7 @@ public class Transaction {
     private Double amount;
 
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
 
     @Column(name = "description")
     private String description;
@@ -42,7 +44,7 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(UserAccount userAccount, Category category, String type, Double amount, Date date, String description) {
+    public Transaction(UserAccount userAccount, Category category, String type, Double amount, LocalDate date, String description) {
         this.userAccount = userAccount;
         this.category = category;
         this.type = type;
@@ -92,11 +94,11 @@ public class Transaction {
 		this.amount = amount;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
