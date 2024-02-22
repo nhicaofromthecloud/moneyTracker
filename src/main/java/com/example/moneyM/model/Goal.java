@@ -20,8 +20,8 @@ public class Goal {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long goalId;
 
-    @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @ManyToOne 
+    @JoinColumn(name = "userId", nullable = true) //nullable sets to true so corresponding user account can be deleted despite FK constraint
     private UserAccount userAccount;
 
     @Column(name = "name")
