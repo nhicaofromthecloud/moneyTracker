@@ -1,7 +1,9 @@
 package com.example.moneyM;
 
+import com.example.moneyM.model.Category;
 import com.example.moneyM.model.Goal;
 import com.example.moneyM.model.UserAccount;
+import com.example.moneyM.repository.CategoryRepository;
 import com.example.moneyM.repository.GoalRepository;
 import com.example.moneyM.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,7 @@ public class MoneyMakerApplication {
     }
 
     @Bean
-    public CommandLineRunner demoData(UserAccountRepository userAccountRepo, GoalRepository goalRepo) {
+    public CommandLineRunner demoData(UserAccountRepository userAccountRepo, GoalRepository goalRepo, CategoryRepository categoryRepo) {
         return args -> {
             // Create sample user accounts
             UserAccount user1 = new UserAccount("User1", "user1@example.com", "password1");
@@ -40,7 +42,15 @@ public class MoneyMakerApplication {
 
             goalRepo.save(new Goal(user3, "Retirement Savings", 30000.00, 0.00, LocalDate.now(), LocalDate.now().plusYears(5)));
             goalRepo.save(new Goal(user3, "College Fund", 25000.00, 0.00, LocalDate.now(), LocalDate.now().plusYears(10)));
-
+            
+            // Add category
+            categoryRepo.save(new Category("Salary", "income"));
+            categoryRepo.save(new Category("Bonus", "income"));
+            categoryRepo.save(new Category("Dividends", "income"));
+            categoryRepo.save(new Category("Gift", "income"));
+            categoryRepo.save(new Category("Utilities", "expense"));
+            categoryRepo.save(new Category("Bills", "expense"));
+            categoryRepo.save(new Category("Gas", "expense"));
         };
     }
 }
