@@ -34,7 +34,7 @@ public class BudgetService {
 		if (userAccountOptional.isPresent()) {
 		    userAccount = userAccountOptional.get();
 		} else {
-		    throw new IllegalArgumentException("Invalid User");
+		    throw new RuntimeException("Invalid User");
 		}
 
 		// Validate category existence
@@ -43,7 +43,7 @@ public class BudgetService {
 		if (categoryOptional.isPresent()) {
 		    category = categoryOptional.get();
 		} else {
-		    throw new IllegalArgumentException("Invalid Category");
+		    throw new RuntimeException("Invalid Category");
 		}
 
         // Set validated user account and category
@@ -74,9 +74,26 @@ public class BudgetService {
 	//Update a budget
 	public Budget updateBudget(Long id, Budget budgetDetails) {
 		Budget budget = getBudgetById(id); // Reuse getBudgetById to ensure the budget exists
-		
+
 		budget.setAmount(budgetDetails.getAmount());
-		budget.setTimeFrame(budget.getTimeFrame());
+		budget.setTimeFrame(budgetDetails.getTimeFrame());
+		
+		
+//        Optional<Category> newCategoryOptional = categoryRepository.findById(budgetDetails.getCategory().getCategoryId());
+//        Optional<Budget> existingBudget = budgetRepository.findByCategoryAndUserAccount(newCategoryOptional.get(), budget.getUserAccount());
+//
+//	    if (budget.getCategory().equals(budgetDetails.getCategory())) {
+//		    budget.setAmount(budgetDetails.getAmount());
+//		    budget.setTimeFrame(budgetDetails.getTimeFrame());
+//	    } else if (existingBudget.isPresent()) {
+//            throw new RuntimeException("Cannot update category: Budget for this category already exists for the user");
+//        } else {
+//            // If the new category doesn't exist for the user, update the budget with the new category
+//            budget.setCategory(budgetDetails.getCategory());
+//            budget.setAmount(budgetDetails.getAmount());
+//            budget.setTimeFrame(budgetDetails.getTimeFrame());
+//        }
+
 		
 		return budgetRepository.save(budget);
 	}
