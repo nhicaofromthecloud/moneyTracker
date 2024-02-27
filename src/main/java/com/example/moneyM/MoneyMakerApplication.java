@@ -5,11 +5,15 @@ import com.example.moneyM.model.Category;
 import com.example.moneyM.model.Goal;
 import com.example.moneyM.model.Transaction;
 import com.example.moneyM.model.UserAccount;
+import com.example.moneyM.model.Wallet;
+import com.example.moneyM.model.WalletType;
 import com.example.moneyM.repository.BudgetRepository;
 import com.example.moneyM.repository.CategoryRepository;
 import com.example.moneyM.repository.GoalRepository;
 import com.example.moneyM.repository.TransactionRepository;
 import com.example.moneyM.repository.UserAccountRepository;
+import com.example.moneyM.repository.WalletRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -28,11 +32,12 @@ public class MoneyMakerApplication {
     }
 
     @Bean
-    public CommandLineRunner demoData(UserAccountRepository userAccountRepo, 
+    public CommandLineRunner demoData(UserAccountRepository userAccountRepo,
     								  GoalRepository goalRepo,
     								  CategoryRepository categoryRepo,
     								  BudgetRepository budgetRepo,
-    								  TransactionRepository transactionRepo) {
+    								  TransactionRepository transactionRepo,
+    								  WalletRepository walletRepo) {
 
         return args -> {
             // Create sample user accounts
@@ -43,6 +48,12 @@ public class MoneyMakerApplication {
             userAccountRepo.save(user1);
             userAccountRepo.save(user2);
             userAccountRepo.save(user3);
+            
+            // create basic wallet for each user
+            walletRepo.save(new Wallet(user1, "Default Wallet", WalletType.BASIC, 0.00));
+            walletRepo.save(new Wallet(user2, "Default Wallet", WalletType.BASIC, 0.00));
+            walletRepo.save(new Wallet(user3, "Default Wallet", WalletType.BASIC, 0.00));
+            
 
             // Add sample goals for each user
             goalRepo.save(new Goal(user1, "Europe Trip", 5000.00, 0.00, LocalDate.now(), LocalDate.now().plusMonths(12)));
