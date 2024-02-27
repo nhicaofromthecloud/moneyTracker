@@ -1,9 +1,11 @@
 package com.example.moneyM;
 
+import com.example.moneyM.model.Budget;
 import com.example.moneyM.model.Category;
 import com.example.moneyM.model.Goal;
 import com.example.moneyM.model.Transaction;
 import com.example.moneyM.model.UserAccount;
+import com.example.moneyM.repository.BudgetRepository;
 import com.example.moneyM.repository.CategoryRepository;
 import com.example.moneyM.repository.GoalRepository;
 import com.example.moneyM.repository.TransactionRepository;
@@ -29,7 +31,9 @@ public class MoneyMakerApplication {
     public CommandLineRunner demoData(UserAccountRepository userAccountRepo, 
     								  GoalRepository goalRepo,
     								  CategoryRepository categoryRepo,
+    								  BudgetRepository budgetRepo,
     								  TransactionRepository transactionRepo) {
+
         return args -> {
             // Create sample user accounts
             UserAccount user1 = new UserAccount("User1", "user1@example.com", "password1");
@@ -51,45 +55,47 @@ public class MoneyMakerApplication {
             goalRepo.save(new Goal(user3, "College Fund", 25000.00, 0.00, LocalDate.now(), LocalDate.now().plusYears(10)));
             
 
-            // Add category
-            Category category1 = new Category("Salary", "income");
-            Category category2 = new Category("Bonus", "income");
-            Category category3 = new Category("Dividends", "income");
-            Category category4 = new Category("Gift", "income");
-            Category category5 = new Category("Utilities", "expense");
-            Category category6 = new Category("Bills", "expense");
-            Category category7 = new Category("Gas", "expense");
-            Category category8 = new Category("Groceries", "expense");
-           
-            categoryRepo.save(category1);
-            categoryRepo.save(category2);
-            categoryRepo.save(category3);
-            categoryRepo.save(category4);
-            categoryRepo.save(category5);
-            categoryRepo.save(category6);
-            categoryRepo.save(category7);
-            categoryRepo.save(category8);
-          
-           
-         // Create sample transactions for each user
-            Transaction transaction1 = new Transaction(user1, category1, "Income", 1000.0, LocalDate.now(), "Salary");
-            Transaction transaction2 = new Transaction(user1, category8, "Expense", 50.0, LocalDate.now(), "Groceries");
+            Category salary = new Category("Salary", "income");
+            Category bonus = new Category("Bonus", "income");
+            Category dividends = new Category("Dividends", "income");
+            Category gift = new Category("Gift", "income");
+            Category utilities = new Category("Utilities", "expense");
+            Category bills = new Category("Bills", "expense");
+            Category gas = new Category("Gas", "expense");
+            Category groceries = new Category("Groceries", "expense");
+
+            categoryRepo.save(salary);
+            categoryRepo.save(bonus);
+            categoryRepo.save(dividends);
+            categoryRepo.save(gift);
+            categoryRepo.save(utilities);
+            categoryRepo.save(bills);
+            categoryRepo.save(gas);
+            categoryRepo.save(groceries);
             
-            Transaction transaction3 = new Transaction(user2, category6, "Expense", 200.0, LocalDate.now(), "Dinner with friends");
-            Transaction transaction4 = new Transaction(user2, category2, "Income", 500.0, LocalDate.now(), "Part-time QA");
+            //Add budget
+            budgetRepo.save(new Budget(user1, salary, 2000.50, "year"));
+            budgetRepo.save(new Budget(user1, gas, 200.0, "month"));
+            budgetRepo.save(new Budget(user2, gas, 300.0, "month"));
+            budgetRepo.save(new Budget(user2, bills, 200.55, "month"));
+            budgetRepo.save(new Budget(user2, utilities, 900.33, "week"));
+
             
-            Transaction transaction5 = new Transaction(user2, category6, "Expense", 1200.0, LocalDate.now(), "Rent");
-            Transaction transaction6 = new Transaction(user2, category2, "Income", 2000.0, LocalDate.now(), "Online Selling Inc");
-            
-            
+            // Create sample transactions for each user
+            Transaction transaction1 = new Transaction(user1, salary, "income", 1000.0, LocalDate.now(), "Salary");
+            Transaction transaction2 = new Transaction(user1, groceries, "expense", 50.0, LocalDate.now(), "Groceries");
+               
+            Transaction transaction3 = new Transaction(user2, groceries, "expense", 200.0, LocalDate.now(), "Waltermart groceries");
+            Transaction transaction4 = new Transaction(user2, salary, "income", 500.0, LocalDate.now(), "Part-time QA");
+               
+            Transaction transaction5 = new Transaction(user2, utilities, "expense", 1200.0, LocalDate.now(), "Rent");
+            Transaction transaction6 = new Transaction(user2, salary, "income", 2000.0, LocalDate.now(), "Online Selling income");
+               
+               
             // Add transactions to repo
             List<Transaction> transactions = Arrays.asList(transaction1, transaction2, transaction3, 
-            												transaction4, transaction5, transaction6);
+               												transaction4, transaction5, transaction6);
             transactionRepo.saveAll(transactions);
-         
-           
-            
-
         };
     }
 }
