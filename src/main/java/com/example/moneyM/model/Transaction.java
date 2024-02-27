@@ -24,6 +24,10 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
     private UserAccount userAccount;
+    
+    @ManyToOne
+    @JoinColumn(name = "walletId", nullable = false)
+    private Wallet wallet;
 
     @ManyToOne
     @JoinColumn(name = "categoryId", nullable = false)
@@ -44,8 +48,9 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(UserAccount userAccount, Category category, String type, Double amount, LocalDate date, String description) {
+    public Transaction(UserAccount userAccount, Wallet wallet, Category category, String type, Double amount, LocalDate date, String description) {
         this.userAccount = userAccount;
+        this.wallet = wallet;
         this.category = category;
         this.type = type;
         this.amount = amount;
@@ -68,6 +73,14 @@ public class Transaction {
 
 	public void setUserAccount(UserAccount userAccount) {
 		this.userAccount = userAccount;
+	}
+
+	public Wallet getWallet() {
+		return wallet;
+	}
+
+	public void setWallet(Wallet wallet) {
+		this.wallet = wallet;
 	}
 
 	public Category getCategory() {

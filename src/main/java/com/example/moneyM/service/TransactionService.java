@@ -15,11 +15,11 @@ public class TransactionService {
 	
 	@Autowired
 	private TransactionRepository transactionRepository;
-
+	
 	public TransactionService(TransactionRepository transactionRepository) {
 		this.transactionRepository = transactionRepository;
 	}
-	
+
 	public Transaction createTransaction(Transaction transaction) {
 		return transactionRepository.save(transaction);
 	}

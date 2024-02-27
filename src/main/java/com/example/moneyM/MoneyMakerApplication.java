@@ -49,10 +49,15 @@ public class MoneyMakerApplication {
             userAccountRepo.save(user2);
             userAccountRepo.save(user3);
             
+            Wallet user1BasicWallet = new Wallet(user1, "Default Wallet", WalletType.BASIC, 0.00);
+            Wallet user2BasicWallet = new Wallet(user2, "Default Wallet", WalletType.BASIC, 0.00);
+            Wallet user3BasicWallet = new Wallet(user3, "Default Wallet", WalletType.BASIC, 0.00);
+            
+            
             // create basic wallet for each user
-            walletRepo.save(new Wallet(user1, "Default Wallet", WalletType.BASIC, 0.00));
-            walletRepo.save(new Wallet(user2, "Default Wallet", WalletType.BASIC, 0.00));
-            walletRepo.save(new Wallet(user3, "Default Wallet", WalletType.BASIC, 0.00));
+            walletRepo.save(user1BasicWallet);
+            walletRepo.save(user2BasicWallet);
+            walletRepo.save(user3BasicWallet);
             
 
             // Add sample goals for each user
@@ -93,14 +98,14 @@ public class MoneyMakerApplication {
 
             
             // Create sample transactions for each user
-            Transaction transaction1 = new Transaction(user1, salary, "income", 1000.0, LocalDate.now(), "Salary");
-            Transaction transaction2 = new Transaction(user1, groceries, "expense", 50.0, LocalDate.now(), "Groceries");
+            Transaction transaction1 = new Transaction(user1, user1BasicWallet, salary, "income", 1000.0, LocalDate.now(), "Salary");
+            Transaction transaction2 = new Transaction(user1, user1BasicWallet, groceries, "expense", 50.0, LocalDate.now(), "Groceries");
                
-            Transaction transaction3 = new Transaction(user2, groceries, "expense", 200.0, LocalDate.now(), "Waltermart groceries");
-            Transaction transaction4 = new Transaction(user2, salary, "income", 500.0, LocalDate.now(), "Part-time QA");
+            Transaction transaction3 = new Transaction(user2, user2BasicWallet, groceries, "expense", 200.0, LocalDate.now(), "Waltermart groceries");
+            Transaction transaction4 = new Transaction(user2, user2BasicWallet, salary, "income", 500.0, LocalDate.now(), "Part-time QA");
                
-            Transaction transaction5 = new Transaction(user2, utilities, "expense", 1200.0, LocalDate.now(), "Rent");
-            Transaction transaction6 = new Transaction(user2, salary, "income", 2000.0, LocalDate.now(), "Online Selling income");
+            Transaction transaction5 = new Transaction(user2, user3BasicWallet, utilities, "expense", 1200.0, LocalDate.now(), "Rent");
+            Transaction transaction6 = new Transaction(user2, user3BasicWallet, salary, "income", 2000.0, LocalDate.now(), "Online Selling income");
                
                
             // Add transactions to repo
