@@ -14,6 +14,7 @@ import com.example.moneyM.repository.TransactionRepository;
 import com.example.moneyM.repository.UserAccountRepository;
 import com.example.moneyM.repository.WalletRepository;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -30,6 +31,12 @@ public class MoneyMakerApplication {
     public static void main(String[] args) {
         SpringApplication.run(MoneyMakerApplication.class, args);
     }
+    
+	@Bean
+	public ModelMapper modelMapper() {
+	    return new ModelMapper();
+	}
+
 
     @Bean
     public CommandLineRunner demoData(UserAccountRepository userAccountRepo,
@@ -104,8 +111,8 @@ public class MoneyMakerApplication {
             Transaction transaction3 = new Transaction(user2, user2BasicWallet, groceries, "expense", 200.0, LocalDate.now(), "Waltermart groceries");
             Transaction transaction4 = new Transaction(user2, user2BasicWallet, salary, "income", 500.0, LocalDate.now(), "Part-time QA");
                
-            Transaction transaction5 = new Transaction(user2, user3BasicWallet, utilities, "expense", 1200.0, LocalDate.now(), "Rent");
-            Transaction transaction6 = new Transaction(user2, user3BasicWallet, salary, "income", 2000.0, LocalDate.now(), "Online Selling income");
+            Transaction transaction5 = new Transaction(user3, user3BasicWallet, utilities, "expense", 1200.0, LocalDate.now(), "Rent");
+            Transaction transaction6 = new Transaction(user3, user3BasicWallet, salary, "income", 2000.0, LocalDate.now(), "Online Selling income");
                
                
             // Add transactions to repo

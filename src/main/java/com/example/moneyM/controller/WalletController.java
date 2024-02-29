@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.moneyM.dto.WalletDto;
 import com.example.moneyM.model.Wallet;
 import com.example.moneyM.service.WalletService;
 
@@ -25,28 +26,28 @@ public class WalletController {
 	private WalletService walletService;
 	
 	@PostMapping
-	public ResponseEntity<Wallet> createWallet(@RequestBody Wallet wallet) {
-		Wallet newWallet = walletService.createWallet(wallet);
+	public ResponseEntity<WalletDto> createWallet(@RequestBody WalletDto wallet) {
+		WalletDto newWallet = walletService.createWallet(wallet);
 		return new ResponseEntity<>(newWallet, HttpStatus.CREATED);
 	};
 	
 	@GetMapping
-	public ResponseEntity<List<Wallet>> getAllWallets() {
-		List<Wallet> wallets = walletService.getAllWallets();
+	public ResponseEntity<List<WalletDto>> getAllWallets() {
+		List<WalletDto> wallets = walletService.getAllWallets();
 		return ResponseEntity.ok(wallets);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Wallet> getWalletById(@PathVariable Long id) {
-		Wallet wallet = walletService.getWalletById(id);
+	public ResponseEntity<WalletDto> getWalletById(@PathVariable Long id) {
+		WalletDto wallet = walletService.getWalletById(id);
 		return ResponseEntity.ok(wallet); 
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Wallet> updateWallet(@PathVariable Long id,
-											   @RequestBody Wallet wallet) {
+	public ResponseEntity<WalletDto> updateWallet(@PathVariable Long id,
+											   @RequestBody WalletDto wallet) {
 		
-		Wallet updatedWallet = walletService.updateWallet(id, wallet);
+		WalletDto updatedWallet = walletService.updateWallet(id, wallet);
 		return ResponseEntity.ok(updatedWallet); 
 	}
 	

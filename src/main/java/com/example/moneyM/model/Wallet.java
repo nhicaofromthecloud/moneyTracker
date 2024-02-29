@@ -15,7 +15,7 @@ public class Wallet {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private Long walletId;
 	
 	@ManyToOne
 	@JoinColumn(name = "userId", nullable = false)
@@ -41,11 +41,11 @@ public class Wallet {
 	}
 
 	public Long getId() {
-		return id;
+		return walletId;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.walletId = id;
 	}
 
 	public UserAccount getUserAccount() {

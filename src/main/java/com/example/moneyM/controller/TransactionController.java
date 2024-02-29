@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.moneyM.dto.TransactionDto;
+import com.example.moneyM.dto.TransactionResponse;
 import com.example.moneyM.model.Transaction;
 import com.example.moneyM.service.TransactionService;
 
@@ -25,28 +27,29 @@ public class TransactionController {
 	private TransactionService transactionService;
 	
 	@PostMapping
-	public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
-		Transaction newTransaction = transactionService.createTransaction(transaction);
+	public ResponseEntity<TransactionDto> createTransaction(@RequestBody TransactionDto transactionDto) {
+		
+		TransactionDto newTransaction = transactionService.createTransaction(transactionDto);
 		return new ResponseEntity<>(newTransaction, HttpStatus.CREATED);
 	};
 	
 	@GetMapping
-	public ResponseEntity<List<Transaction>> getAllTransactions() {
-		List<Transaction> transactions = transactionService.getAllTransactions();
+	public ResponseEntity<List<TransactionResponse>> getAllTransactions() {
+		List<TransactionResponse> transactions = transactionService.getAllTransactions();
 		return ResponseEntity.ok(transactions);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Transaction> getTransactionById(@PathVariable Long id) {
-		Transaction transaction = transactionService.getTransactionById(id);
+	public ResponseEntity<TransactionResponse> getTransactionById(@PathVariable Long id) {
+		TransactionResponse transaction = transactionService.getTransactionById(id);
 		return ResponseEntity.ok(transaction); 
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id,
-														@RequestBody Transaction transaction) {
+	public ResponseEntity<TransactionDto> updateTransaction(@PathVariable Long id,
+														@RequestBody TransactionDto transactionDto) {
 		
-		Transaction updatedTransaction = transactionService.updateTransaction(id, transaction);
+		TransactionDto updatedTransaction = transactionService.updateTransaction(id, transactionDto);
 		return ResponseEntity.ok(updatedTransaction); 
 	}
 	
