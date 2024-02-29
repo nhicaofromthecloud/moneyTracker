@@ -105,14 +105,14 @@ public class MoneyMakerApplication {
 
             
             // Create sample transactions for each user
-            Transaction transaction1 = new Transaction(user1, user1BasicWallet, salary, "income", 1000.0, LocalDate.now(), "Salary");
-            Transaction transaction2 = new Transaction(user1, user1BasicWallet, groceries, "expense", 50.0, LocalDate.now(), "Groceries");
+            Transaction transaction1 = new Transaction(user1, user1BasicWallet, salary, 1000.0, LocalDate.now(), "Salary");
+            Transaction transaction2 = new Transaction(user1, user1BasicWallet, groceries, 50.0, LocalDate.now(), "Groceries");
                
-            Transaction transaction3 = new Transaction(user2, user2BasicWallet, groceries, "expense", 200.0, LocalDate.now(), "Waltermart groceries");
-            Transaction transaction4 = new Transaction(user2, user2BasicWallet, salary, "income", 500.0, LocalDate.now(), "Part-time QA");
+            Transaction transaction3 = new Transaction(user2, user2BasicWallet, groceries, 200.0, LocalDate.now(), "Waltermart groceries");
+            Transaction transaction4 = new Transaction(user2, user2BasicWallet, salary, 500.0, LocalDate.now(), "Part-time QA");
                
-            Transaction transaction5 = new Transaction(user3, user3BasicWallet, utilities, "expense", 1200.0, LocalDate.now(), "Rent");
-            Transaction transaction6 = new Transaction(user3, user3BasicWallet, salary, "income", 2000.0, LocalDate.now(), "Online Selling income");
+            Transaction transaction5 = new Transaction(user3, user3BasicWallet, utilities, 1200.0, LocalDate.now(), "Rent");
+            Transaction transaction6 = new Transaction(user3, user3BasicWallet, salary, 2000.0, LocalDate.now(), "Online Selling income");
                
                
             // Add transactions to repo

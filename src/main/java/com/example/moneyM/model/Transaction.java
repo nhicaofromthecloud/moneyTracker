@@ -33,9 +33,6 @@ public class Transaction {
     @JoinColumn(name = "categoryId", nullable = false)
     private Category category;
 
-    @Column(name = "type")
-    private String type;
-
     @Column(name = "amount")
     private Double amount;
 
@@ -48,11 +45,10 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(UserAccount userAccount, Wallet wallet, Category category, String type, Double amount, LocalDate date, String description) {
+    public Transaction(UserAccount userAccount, Wallet wallet, Category category, Double amount, LocalDate date, String description) {
         this.userAccount = userAccount;
         this.wallet = wallet;
         this.category = category;
-        this.type = type;
         this.amount = amount;
         this.date = date;
         this.description = description;
@@ -89,14 +85,6 @@ public class Transaction {
 
 	public void setCategory(Category category) {
 		this.category = category;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public Double getAmount() {

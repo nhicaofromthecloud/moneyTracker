@@ -7,8 +7,6 @@ public class TransactionDto {
 	
 	private Double amount;
 	
-	private String type;
-	
 	private String date;
 	
 	private String description;
@@ -33,14 +31,6 @@ public class TransactionDto {
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public String getDate() {

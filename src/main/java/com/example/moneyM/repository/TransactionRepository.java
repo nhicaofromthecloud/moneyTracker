@@ -12,9 +12,7 @@ import com.example.moneyM.model.Transaction;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long>{
     
-	Optional<Transaction> findByCategory(Category category);
-	
-	Optional<Transaction> findByType(String type);     
+	Optional<Transaction> findByCategory(Category category);     
 	
 	Optional<Transaction> findByDateBetween(LocalDate startDate, LocalDate endDate);
 }

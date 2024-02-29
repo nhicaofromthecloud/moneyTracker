@@ -94,7 +94,6 @@ public class TransactionService {
 	                .orElseThrow(() -> new RuntimeException("Category not found"));
 		
 		transaction.setDescription(transactionDto.getDescription());
-		transaction.setType(transactionDto.getType());
 		transaction.setAmount(transactionDto.getAmount());
 		transaction.setCategory(category);
 		transaction.setDate(LocalDate.parse(transactionDto.getDate()));
