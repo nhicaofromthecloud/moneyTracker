@@ -23,6 +23,10 @@ public class Goal {
     @ManyToOne 
     @JoinColumn(name = "userId", nullable = true) //nullable sets to true so corresponding user account can be deleted despite FK constraint
     private UserAccount userAccount;
+    
+    @ManyToOne
+    @JoinColumn(name = "walletId", nullable = true)
+    private Wallet wallet;
 
     @Column(name = "name")
     private String name;
@@ -65,6 +69,14 @@ public class Goal {
 
 	public void setUserAccount(UserAccount userAccount) {
 		this.userAccount = userAccount;
+	}
+
+	public Wallet getWallet() {
+		return wallet;
+	}
+
+	public void setWallet(Wallet wallet) {
+		this.wallet = wallet;
 	}
 
 	public String getName() {
