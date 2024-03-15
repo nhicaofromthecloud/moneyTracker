@@ -1,55 +1,127 @@
 package com.example.moneyM.service;
 
+import com.example.moneyM.dto.GoalDto;
+import com.example.moneyM.dto.GoalResponse;
+import com.example.moneyM.dto.WalletDto;
 import com.example.moneyM.model.Goal;
+import com.example.moneyM.model.UserAccount;
+import com.example.moneyM.model.Wallet;
+import com.example.moneyM.model.WalletType;
 import com.example.moneyM.repository.GoalRepository;
+import com.example.moneyM.repository.UserAccountRepository;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GoalService {
 
-    @Autowired
-    private GoalRepository goalRepository;
+	@Autowired
+	private GoalRepository goalRepository;
+	
+	@Autowired
+	private WalletService walletService;
 
-    // Create a new goal
-    public Goal createGoal(Goal goal) {
-        return goalRepository.save(goal);
-    }
+	@Autowired
+	private ModelMapper modelMapper;
 
-    // Get all goals
-    public List<Goal> getAllGoals() {
-        return goalRepository.findAll();
-    }
 
-    // Get a goal by ID
-    public Goal getGoalById(Long id) {
-        Optional<Goal> goal = goalRepository.findById(id);
-        if (goal.isPresent()) {
-            return goal.get();
-        } else {
-            throw new RuntimeException("Goal not found for id :: " + id);
-        }
-    }
+	@Autowired
+	private UserAccountRepository userAccountRepository;
 
-    // Update a goal
-    public Goal updateGoal(Long id, Goal goalDetails) {
-        Goal goal = getGoalById(id); // Reuse getGoalById to ensure the goal exists
 
-        goal.setName(goalDetails.getName());
-        goal.setTargetAmount(goalDetails.getTargetAmount());
-        goal.setCurrentAmount(goalDetails.getCurrentAmount());
-        goal.setStartDate(goalDetails.getStartDate());
-        goal.setTargetDate(goalDetails.getTargetDate());
 
-        return goalRepository.save(goal);
-    }
+	public GoalService(GoalRepository goalRepository, UserAccountRepository userAccountRepository) {
+		this.goalRepository = goalRepository;
+		this.userAccountRepository = userAccountRepository;
+	}
 
-    // Delete a goal
-    public void deleteGoal(Long id) {
-        Goal goal = getGoalById(id); // Reuse getGoalById to ensure the goal exists
-        goalRepository.delete(goal);
-    }
+	// Create a new goal
+	public GoalDto createGoal(GoalDto goalDto) {
+		UserAccount userAccount = userAccountRepository.findById(goalDto.getUserId())
+				.orElseThrow(() -> new RuntimeException("UserAccount not found"));
+		
+		// create wallet for the new goal
+	    WalletDto walletDto = new WalletDto();
+	    walletDto.setUserId(goalDto.getUserId());
+	    walletDto.setName(goalDto.getName());
+	    walletDto.setType(WalletType.GOAL);
+	    walletDto.setCurrentAmount(goalDto.getCurrentAmount());
+	    WalletDto createdWallet = walletService.createWallet(walletDto);
+
+		//convert DTO to Entity
+		Goal goalRequest = modelMapper.map(goalDto, Goal.class);
+		Wallet goalWallet = modelMapper.map(createdWallet, Wallet.class);
+
+		// set UserAccount for Goal entity
+		goalRequest.setUserAccount(userAccount);
+		goalRequest.setWallet(goalWallet);
+
+		// convert dto String dates to LocalDate
+		LocalDate startDate = LocalDate.parse(goalDto.getStartDate());
+		goalRequest.setStartDate(startDate);
+
+		LocalDate targetDate = LocalDate.parse(goalDto.getTargetDate());
+		goalRequest.setTargetDate(targetDate);
+
+		Goal goal = goalRepository.save(goalRequest);
+
+		// convert Entity to DTO
+		GoalDto goalResponse = modelMapper.map(goal, GoalDto.class);
+
+		return goalResponse;
+	}
+
+	// Get all goals
+	public List<GoalResponse> getAllGoals() {
+		List<Goal> goalList = goalRepository.findAll();
+		return goalList
+				.stream()
+				.map(goal -> modelMapper.map(goal,  GoalResponse.class))
+				.collect(Collectors.toList());
+	}
+
+	// Get a goal by ID
+	public GoalResponse getGoalById(Long id) {
+		Goal goal = goalRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException(("Goal not found: " + id)));
+
+		// convert Entity to DTO
+		GoalResponse goalResponse = modelMapper.map(goal, GoalResponse.class);
+
+		return goalResponse;
+
+	}
+
+	// Update a goal
+	public GoalDto updateGoal(Long id, GoalDto goalDto) {
+		Goal goal = goalRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException(("Goal not found: " + id)));
+
+		goal.setName(goalDto.getName());
+		goal.setTargetAmount(goalDto.getTargetAmount());
+		goal.setCurrentAmount(goalDto.getCurrentAmount());
+		goal.setStartDate(LocalDate.parse(goalDto.getStartDate()));
+		goal.setTargetDate(LocalDate.parse(goalDto.getTargetDate()));
+
+		Goal updatedGoal = goalRepository.save(goal);
+
+		// convert Entity to DTO
+		GoalDto updateGoalDto = modelMapper.map(updatedGoal, GoalDto.class);
+
+		return updateGoalDto;
+	}
+
+	// Delete a goal
+	public void deleteGoal(Long id) {
+		goalRepository.findById(id)
+			.orElseThrow(() -> new RuntimeException("Goal not found for id: " + id));
+
+		goalRepository.deleteById(id);
+	}
 }

@@ -1,6 +1,7 @@
 package com.example.moneyM.controller;
 
-import com.example.moneyM.model.Goal;
+import com.example.moneyM.dto.GoalDto;
+import com.example.moneyM.dto.GoalResponse;
 import com.example.moneyM.service.GoalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,29 +19,29 @@ public class GoalController {
 
     // Create a new goal
     @PostMapping
-    public ResponseEntity<Goal> createGoal(@RequestBody Goal goal) {
-        Goal savedGoal = goalService.createGoal(goal);
+    public ResponseEntity<GoalDto> createGoal(@RequestBody GoalDto goalDto) {
+    	GoalDto savedGoal = goalService.createGoal(goalDto);
         return new ResponseEntity<>(savedGoal, HttpStatus.CREATED);
     }
 
     // Get all goals
     @GetMapping
-    public ResponseEntity<List<Goal>> getAllGoals() {
-        List<Goal> goals = goalService.getAllGoals();
+    public ResponseEntity<List<GoalResponse>> getAllGoals() {
+        List<GoalResponse> goals = goalService.getAllGoals();
         return ResponseEntity.ok(goals);
     }
 
     // Get a single goal by id
     @GetMapping("/{id}")
-    public ResponseEntity<Goal> getGoalById(@PathVariable Long id) {
-        Goal goal = goalService.getGoalById(id);
+    public ResponseEntity<GoalResponse> getGoalById(@PathVariable Long id) {
+    	GoalResponse goal = goalService.getGoalById(id);
         return ResponseEntity.ok(goal);
     }
 
     // Update a goal
     @PutMapping("/{id}")
-    public ResponseEntity<Goal> updateGoal(@PathVariable Long id, @RequestBody Goal goalDetails) {
-        Goal updatedGoal = goalService.updateGoal(id, goalDetails);
+    public ResponseEntity<GoalDto> updateGoal(@PathVariable Long id, @RequestBody GoalDto goalDto) {
+    	GoalDto updatedGoal = goalService.updateGoal(id, goalDto);
         return ResponseEntity.ok(updatedGoal);
     }
 

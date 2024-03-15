@@ -1,8 +1,10 @@
 package com.example.moneyM.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,11 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.moneyM.dto.TransactionDto;
 import com.example.moneyM.dto.TransactionResponse;
-import com.example.moneyM.model.Transaction;
 import com.example.moneyM.service.TransactionService;
 
 @RestController
@@ -34,8 +36,9 @@ public class TransactionController {
 	};
 	
 	@GetMapping
-	public ResponseEntity<List<TransactionResponse>> getAllTransactions() {
-		List<TransactionResponse> transactions = transactionService.getAllTransactions();
+	public ResponseEntity<List<TransactionResponse>> getAllTransactions(@RequestParam(required = false) Long userId,
+            													@RequestParam(required = false) String description) {
+		List<TransactionResponse> transactions = transactionService.getAllTransactions(userId, description);
 		return ResponseEntity.ok(transactions);
 	}
 	
@@ -61,6 +64,15 @@ public class TransactionController {
 	}
 	
 	
-	
+	@GetMapping("/filter")
+	public ResponseEntity<List<TransactionResponse>> getTransactionsByDateRange(
+			@RequestParam("userId") Long userId,
+			@RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+			@RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+		List<TransactionResponse> transactions = transactionService.getTransactionsByDateRange(userId, startDate, endDate);
+		return ResponseEntity.ok(transactions);
+	}
+
+
 	
 }
