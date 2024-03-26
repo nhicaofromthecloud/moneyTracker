@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.moneyM.dto.BudgetDto;
+import com.example.moneyM.dto.BudgetResponse;
 import com.example.moneyM.model.Budget;
 import com.example.moneyM.service.BudgetService;
 
@@ -26,29 +29,29 @@ public class BudgetController {
 	
 	//Create new budget
 	@PostMapping
-	public ResponseEntity<Budget> createBudget(@RequestBody Budget budget) {
-		Budget newBudget = budgetService.createBudget(budget);
+	public ResponseEntity<BudgetDto> createBudget(@RequestBody BudgetDto budgetDto) {
+		BudgetDto newBudget = budgetService.createBudget(budgetDto);
 		return new ResponseEntity<>(newBudget, HttpStatus.CREATED);
 	}
 
 	//Get all budget
 	@GetMapping
-	public ResponseEntity<List<Budget>> getAllBudgets() {
-		List<Budget> budgets = budgetService.getAllBudgets();
+	public ResponseEntity<List<BudgetResponse>> getAllBudgets(@RequestParam(required = false) Long userId) {
+		List<BudgetResponse> budgets = budgetService.getAllBudgets(userId);
 		return ResponseEntity.ok(budgets);
 	}
 	
 	//Get a single budget by id
 	@GetMapping("/{id}")
-	public ResponseEntity<Budget> getBudgetById(@PathVariable Long id) {
-		Budget budget = budgetService.getBudgetById(id);
+	public ResponseEntity<BudgetResponse> getBudgetById(@PathVariable Long id) {
+		BudgetResponse budget = budgetService.getBudgetById(id);
 		return ResponseEntity.ok(budget);
 	}
 	
 	//Update a category
 	@PutMapping("/{id}")
-	public ResponseEntity<Budget> updateBudget(@PathVariable Long id, @RequestBody Budget budgetDetails) {
-		Budget updatedBudget = budgetService.updateBudget(id, budgetDetails);
+	public ResponseEntity<BudgetDto> updateBudget(@PathVariable Long id, @RequestBody BudgetDto budgetDto) {
+		BudgetDto updatedBudget = budgetService.updateBudget(id, budgetDto);
 		return ResponseEntity.ok(updatedBudget);
 	}
 	
