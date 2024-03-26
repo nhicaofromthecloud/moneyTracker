@@ -1,5 +1,6 @@
 package com.example.moneyM.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,5 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
 //	Optional<Budget> findByBudgetCategory(String category);
 
     Optional<Budget> findByCategoryAndUserAccount(Category category, UserAccount userAccount);
+    List<Budget> findByUserAccountUserId(Long userId);
 }
