@@ -84,46 +84,84 @@ public class MoneyMakerApplication {
             		      25000.00, 0.00, LocalDate.now(), LocalDate.now().plusYears(10)));
             
 
-            Category salary = new Category("Salary", "income");
-            Category bonus = new Category("Bonus", "income");
-            Category dividends = new Category("Dividends", "income");
-            Category gift = new Category("Gift", "income");
-            Category utilities = new Category("Utilities", "expense");
-            Category bills = new Category("Bills", "expense");
-            Category gas = new Category("Gas", "expense");
-            Category groceries = new Category("Groceries", "expense");
+            Category salary1 = new Category(user1, "Salary", "income");
+            Category salary2 = new Category(user2, "Salary", "income");
+            Category salary3 = new Category(user3, "Salary", "income");
 
-            categoryRepo.save(salary);
-            categoryRepo.save(bonus);
-            categoryRepo.save(dividends);
-            categoryRepo.save(gift);
-            categoryRepo.save(utilities);
-            categoryRepo.save(bills);
-            categoryRepo.save(gas);
-            categoryRepo.save(groceries);
+            Category bonus1 = new Category(user1, "Bonus", "income");
+            Category bonus2 = new Category(user2, "Bonus", "income");
+            Category bonus3 = new Category(user3, "Bonus", "income");
+            
+            Category dividends1 = new Category(user1, "Dividends", "income");
+            Category dividends2 = new Category(user2, "Dividends", "income");
+            Category dividends3 = new Category(user3, "Dividends", "income");
+            
+            Category gift1 = new Category(user1, "Gift", "income");
+            Category gift2 = new Category(user2, "Gift", "income");
+            Category gift3 = new Category(user3, "Gift", "income");
+            
+            Category utilities1 = new Category(user1, "Utilities", "expense");
+            Category utilities2 = new Category(user2, "Utilities", "expense");
+            Category utilities3 = new Category(user3, "Utilities", "expense");
+            
+            Category bills1 = new Category(user1, "Bills", "expense");
+            Category bills2 = new Category(user2, "Bills", "expense");
+            Category bills3 = new Category(user3, "Bills", "expense");
+            
+            Category gas1 = new Category(user1, "Gas", "expense");
+            Category gas2 = new Category(user2, "Gas", "expense");
+            Category gas3 = new Category(user3, "Gas", "expense");
+            
+            Category groceries1 = new Category(user1, "Groceries", "expense");
+            Category groceries2 = new Category(user2, "Groceries", "expense");
+            Category groceries3 = new Category(user3, "Groceries", "expense");
+
+            categoryRepo.save(salary1);
+            categoryRepo.save(salary2);
+            categoryRepo.save(salary3);
+            categoryRepo.save(bonus1);
+            categoryRepo.save(bonus2);
+            categoryRepo.save(bonus3);
+            categoryRepo.save(dividends1);
+            categoryRepo.save(dividends2);
+            categoryRepo.save(dividends3);
+            categoryRepo.save(gift1);
+            categoryRepo.save(gift2);
+            categoryRepo.save(gift3);
+            categoryRepo.save(utilities1);
+            categoryRepo.save(utilities2);
+            categoryRepo.save(utilities3);
+            categoryRepo.save(bills1);
+            categoryRepo.save(bills2);
+            categoryRepo.save(bills3);
+            categoryRepo.save(gas1);
+            categoryRepo.save(gas2);
+            categoryRepo.save(gas3);
+            categoryRepo.save(groceries1);
+            categoryRepo.save(groceries2);
             
             //Add budget
-            budgetRepo.save(new Budget(user1, salary, 2000.50, "year"));
-            budgetRepo.save(new Budget(user1, gas, 200.0, "month"));
-            budgetRepo.save(new Budget(user2, gas, 300.0, "month"));
-            budgetRepo.save(new Budget(user2, bills, 200.55, "month"));
-            budgetRepo.save(new Budget(user2, utilities, 900.33, "week"));
+            budgetRepo.save(new Budget(user1, salary1, 2000.50, "year"));
+            budgetRepo.save(new Budget(user1, gas1, 200.0, "month"));
+            budgetRepo.save(new Budget(user2, gas2, 300.0, "month"));
+            budgetRepo.save(new Budget(user2, bills2, 200.55, "month"));
+            budgetRepo.save(new Budget(user2, utilities2, 900.33, "week"));
 
             
             // Create sample transactions for each user
-            Transaction transaction1 = new Transaction(user1, user1BasicWallet, salary, 
+            Transaction transaction1 = new Transaction(user1, user1BasicWallet, salary1, 
             										   1000.0, LocalDate.now(), "Salary");
-            Transaction transaction2 = new Transaction(user1, user1BasicWallet, groceries, 
+            Transaction transaction2 = new Transaction(user1, user1BasicWallet, groceries1, 
             		                                   50.0, LocalDate.now(), "Groceries");
                
-            Transaction transaction3 = new Transaction(user2, user2BasicWallet, groceries, 
+            Transaction transaction3 = new Transaction(user2, user2BasicWallet, groceries2, 
             		                                   200.0, LocalDate.now(), "Waltermart groceries");
-            Transaction transaction4 = new Transaction(user2, user2BasicWallet, salary, 
+            Transaction transaction4 = new Transaction(user2, user2BasicWallet, salary2, 
             		                                   500.0, LocalDate.now(), "Part-time QA");
                
-            Transaction transaction5 = new Transaction(user3, user3BasicWallet, utilities, 
+            Transaction transaction5 = new Transaction(user3, user3BasicWallet, utilities3, 
             		                                   1200.0, LocalDate.now(), "Rent");
-            Transaction transaction6 = new Transaction(user3, user3BasicWallet, salary, 
+            Transaction transaction6 = new Transaction(user3, user3BasicWallet, salary3, 
             		                                   2000.0, LocalDate.now(), "Online Selling income");
                
                
