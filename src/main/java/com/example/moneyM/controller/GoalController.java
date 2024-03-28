@@ -26,8 +26,8 @@ public class GoalController {
 
     // Get all goals
     @GetMapping
-    public ResponseEntity<List<GoalResponse>> getAllGoals() {
-        List<GoalResponse> goals = goalService.getAllGoals();
+    public ResponseEntity<List<GoalResponse>> getAllGoals(@RequestParam(required = false) Long userId) {
+        List<GoalResponse> goals = goalService.getAllGoals(userId);
         return ResponseEntity.ok(goals);
     }
 

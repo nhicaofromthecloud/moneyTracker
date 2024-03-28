@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,8 +79,14 @@ public class GoalService {
 	}
 
 	// Get all goals
-	public List<GoalResponse> getAllGoals() {
-		List<Goal> goalList = goalRepository.findAll();
+	public List<GoalResponse> getAllGoals(Long userId) {
+		List<Goal> goalList = new ArrayList<Goal>();
+		if(userId != null) {
+			goalList = goalRepository.findByUserAccountUserId(userId);
+		} else {
+			goalList = goalRepository.findAll();
+		}	
+				
 		return goalList
 				.stream()
 				.map(goal -> modelMapper.map(goal,  GoalResponse.class))

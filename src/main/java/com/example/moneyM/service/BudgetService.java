@@ -103,38 +103,32 @@ public class BudgetService {
 	
 	//Update a budget
 	public BudgetDto updateBudget(Long id, BudgetDto budgetDto) {
-//		Budget budget = budgetRepository.findById(id); // Reuse getBudgetById to ensure the budget exists
-
 		Budget budget = budgetRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Budget not found"));
 		
-		budget.setAmount(budgetDto.getAmount());
-		budget.setTimeFrame(budgetDto.getTimeFrame());
+		Category category = categoryRepository.findById(budgetDto.getCategoryId())
+				.orElseThrow(() -> new RuntimeException("Category not found"));
 		
-		//save budget entity
-		Budget updatedBudget = budgetRepository.save(budget);
+		// check if existing budget
+		Optional<Budget> existingBudget = budgetRepository.findByCategoryCategoryId(budgetDto.getCategoryId());
 		
-		//convert updated budget to entity DTO
-		BudgetDto updatedBudgetDto = modelMapper.map(updatedBudget, BudgetDto.class);
+		if(existingBudget.isPresent()) {
+			 throw new RuntimeException("Cannot update category: Budget for this category already exists for the user");
+		} else {
+			budget.setAmount(budgetDto.getAmount());
+			budget.setCategory(category);
+			budget.setTimeFrame(budgetDto.getTimeFrame());
+			
+			//save budget entity
+			Budget updatedBudget = budgetRepository.save(budget);
+			
+			//convert updated budget to entity DTO
+			BudgetDto updatedBudgetDto = modelMapper.map(updatedBudget, BudgetDto.class);
+			
+			return updatedBudgetDto;
+		}
 		
-		
-//        Optional<Category> newCategoryOptional = categoryRepository.findById(budgetDetails.getCategory().getCategoryId());
-//        Optional<Budget> existingBudget = budgetRepository.findByCategoryAndUserAccount(newCategoryOptional.get(), budget.getUserAccount());
-//
-//	    if (budget.getCategory().equals(budgetDetails.getCategory())) {
-//		    budget.setAmount(budgetDetails.getAmount());
-//		    budget.setTimeFrame(budgetDetails.getTimeFrame());
-//	    } else if (existingBudget.isPresent()) {
-//            throw new RuntimeException("Cannot update category: Budget for this category already exists for the user");
-//        } else {
-//            // If the new category doesn't exist for the user, update the budget with the new category
-//            budget.setCategory(budgetDetails.getCategory());
-//            budget.setAmount(budgetDetails.getAmount());
-//            budget.setTimeFrame(budgetDetails.getTimeFrame());
-//        }
-
-		
-		return updatedBudgetDto;
+	
 	}
 	
 	//Delete a budget

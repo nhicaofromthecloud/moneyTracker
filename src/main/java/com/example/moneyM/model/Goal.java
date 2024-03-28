@@ -25,7 +25,7 @@ public class Goal {
     private UserAccount userAccount;
     
     @ManyToOne
-    @JoinColumn(name = "walletId", nullable = true)
+    @JoinColumn(name = "walletId", nullable = false)
     private Wallet wallet;
 
     @Column(name = "name")
@@ -46,14 +46,17 @@ public class Goal {
     public Goal() {
     }
 
-    public Goal(UserAccount userAccount, String name, Double targetAmount, Double currentAmount, LocalDate startDate, LocalDate targetDate) {
+    public Goal(UserAccount userAccount, Wallet wallet, String name, Double targetAmount, Double currentAmount, LocalDate startDate, LocalDate targetDate) {
         this.userAccount = userAccount;
+        this.wallet = wallet;
         this.name = name;
         this.targetAmount = targetAmount;
         this.currentAmount = currentAmount;
         this.startDate = startDate;
         this.targetDate = targetDate;
     }
+    
+    
 
 	public Long getGoalId() {
 		return goalId;
