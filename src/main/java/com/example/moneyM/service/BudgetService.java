@@ -23,59 +23,59 @@ public class BudgetService {
 
 	@Autowired
 	private BudgetRepository budgetRepository;
-	
-    @Autowired
-    private UserAccountRepository userAccountRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-    
-    @Autowired
-    private ModelMapper modelMapper;
-	
+	@Autowired
+	private UserAccountRepository userAccountRepository;
+
+	@Autowired
+	private CategoryRepository categoryRepository;
+
+	@Autowired
+	private ModelMapper modelMapper;
+
 	//Create new budget
-    public BudgetDto createBudget(BudgetDto budgetDto) {
+	public BudgetDto createBudget(BudgetDto budgetDto) {
 		// Validate user account existence
 		Optional<UserAccount> userAccountOptional = userAccountRepository.findById(budgetDto.getUserId());
 		UserAccount userAccount;
 		if (userAccountOptional.isPresent()) {
-		    userAccount = userAccountOptional.get();
+			userAccount = userAccountOptional.get();
 		} else {
-		    throw new RuntimeException("Invalid User");
+			throw new RuntimeException("Invalid User");
 		}
-		
+
 		// Validate category existence
 		Optional<Category> categoryOptional = categoryRepository.findById(budgetDto.getCategoryId());
 		Category category;
 		if (categoryOptional.isPresent()) {
-		    category = categoryOptional.get();
+			category = categoryOptional.get();
 		} else {
-		    throw new RuntimeException("Invalid Category");
+			throw new RuntimeException("Invalid Category");
 		}
-		
+
 		//convert DTO to Entity
 		Budget budgetRequest = modelMapper.map(budgetDto, Budget.class);
-		
+
 		//set UserAccount for Budget entity
 		budgetRequest.setUserAccount(userAccount);
-		
+
 		//set Category for Budget entity
 		budgetRequest.setCategory(category);
-		
+
 		Optional<Budget> existingBudget = budgetRepository.findByCategoryAndUserAccount(budgetRequest.getCategory(), budgetRequest.getUserAccount());
-		
+
 		if (existingBudget.isPresent()) {
-            throw new RuntimeException("Budget for this category already exists for the user");
-        }
-		
+			throw new RuntimeException("Budget for this category already exists for the user");
+		}
+
 		Budget budget = budgetRepository.save(budgetRequest);
-		
+
 		//convert Entity to DTO
 		BudgetDto budgetResponse = modelMapper.map(budget, BudgetDto.class);
-		
+
 		return budgetResponse;
-    }
-    
+	}
+
 
 
 	//Get all budget
@@ -95,47 +95,48 @@ public class BudgetService {
 	//Get a budget by ID
 	public BudgetResponse getBudgetById(Long id) {
 		Budget budget = budgetRepository.findById(id).orElseThrow(() -> new RuntimeException("Budget not found for id :: " + id));
-        //convert Entity to DTO
+		//convert Entity to DTO
 		BudgetResponse budgetResponse = modelMapper.map(budget, BudgetResponse.class);
-		
+
 		return budgetResponse;
 	}
-	
+
 	//Update a budget
 	public BudgetDto updateBudget(Long id, BudgetDto budgetDto) {
 		Budget budget = budgetRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Budget not found"));
-		
+
 		Category category = categoryRepository.findById(budgetDto.getCategoryId())
 				.orElseThrow(() -> new RuntimeException("Category not found"));
-		
+
 		// check if existing budget
 		Optional<Budget> existingBudget = budgetRepository.findByCategoryCategoryId(budgetDto.getCategoryId());
-		
+
 		if(existingBudget.isPresent()) {
-			 throw new RuntimeException("Cannot update category: Budget for this category already exists for the user");
-		} else {
-			budget.setAmount(budgetDto.getAmount());
-			budget.setCategory(category);
-			budget.setTimeFrame(budgetDto.getTimeFrame());
-			
-			//save budget entity
-			Budget updatedBudget = budgetRepository.save(budget);
-			
-			//convert updated budget to entity DTO
-			BudgetDto updatedBudgetDto = modelMapper.map(updatedBudget, BudgetDto.class);
-			
-			return updatedBudgetDto;
-		}
+			throw new RuntimeException("Cannot update category: Budget for this category already exists for the user");
+		} 
 		
-	
+		budget.setAmount(budgetDto.getAmount());
+		budget.setCategory(category);
+		budget.setTimeFrame(budgetDto.getTimeFrame());
+
+		//save budget entity
+		Budget updatedBudget = budgetRepository.save(budget);
+
+		//convert updated budget to entity DTO
+		BudgetDto updatedBudgetDto = modelMapper.map(updatedBudget, BudgetDto.class);
+
+		return updatedBudgetDto;
+
+
+
 	}
-	
+
 	//Delete a budget
-    public void deleteBudget(Long id) {
+	public void deleteBudget(Long id) {
 
 		Budget budget = budgetRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Budget not found"));
-        budgetRepository.delete(budget);
-    }
+		budgetRepository.delete(budget);
+	}
 }
