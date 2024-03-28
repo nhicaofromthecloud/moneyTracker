@@ -3,6 +3,7 @@ package com.example.moneyM.dto;
 public class CategoryDto {
 	
 	private Long id;
+	private Long userId;
 	private String name;
 	private String type;
 
@@ -12,6 +13,14 @@ public class CategoryDto {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getName() {
