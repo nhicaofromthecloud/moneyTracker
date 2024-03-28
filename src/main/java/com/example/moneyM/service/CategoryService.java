@@ -1,6 +1,7 @@
 package com.example.moneyM.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -114,5 +115,19 @@ public class CategoryService {
 		categoryRepository.delete(category);
 	}
 
+	
+	public void generateCategoriesForUser(UserAccount user) {
+		List<Category> categories = Arrays.asList(
+				new Category(user, "Salary", "income"),
+				new Category(user, "Bonus", "income"),
+				new Category(user, "Dividends", "income"),
+				new Category(user, "Gift", "income"),
+				new Category(user, "Utilities", "expense"),
+				new Category(user, "Bills", "expense"),
+				new Category(user, "Gas", "expense"),
+				new Category(user, "Groceries", "expense")
+				); 
 
+		categoryRepository.saveAll(categories);
+	}
 }

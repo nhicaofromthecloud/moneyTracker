@@ -10,13 +10,19 @@ import java.util.Optional;
 
 @Service
 public class UserAccountService {
+	
+	@Autowired
+	private CategoryService categoryService;
 
     @Autowired
     private UserAccountRepository userAccountRepository;
 
     // Create a new user account
     public UserAccount createUserAccount(UserAccount userAccount) {
-        return userAccountRepository.save(userAccount);
+    	UserAccount user =  userAccountRepository.save(userAccount);
+    	// add default categories when user created
+        categoryService.generateCategoriesForUser(user);
+        return user;
     }
 
     // Get all user accounts
