@@ -5,6 +5,7 @@ public class BudgetResponse {
 	private Long id;
 	private Double amount;
 	private String timeFrame;
+	private CategoryDto category;
 	
 	public Long getId() {
 		return id;
@@ -24,7 +25,13 @@ public class BudgetResponse {
 	public void setTimeFrame(String timeFrame) {
 		this.timeFrame = timeFrame;
 	}
-	
+	public CategoryDto getCategory() {
+		return category;
+	}
+
+	public void setCategory(CategoryDto category) {
+		this.category = category;
+	}
 	
 	
 }

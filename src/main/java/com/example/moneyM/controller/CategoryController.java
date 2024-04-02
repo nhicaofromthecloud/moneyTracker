@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.moneyM.dto.CategoryDto;
+import com.example.moneyM.dto.CategoryResponse;
 import com.example.moneyM.model.Category;
 import com.example.moneyM.service.CategoryService;
 
@@ -28,29 +31,29 @@ public class CategoryController {
 	
 	//create new category
 	@PostMapping
-	public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-		Category newCategory = categoryService.createCategory(category);
+	public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto) {
+		CategoryDto newCategory = categoryService.createCategory(categoryDto);
 		return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
 	}
 	
     // Get all category
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
-        List<Category> categories = categoryService.getAllCategories();
+    public ResponseEntity<List<CategoryResponse>> getAllCategories(@RequestParam(required = false) Long userId) {
+        List<CategoryResponse> categories = categoryService.getAllCategories(userId);
         return ResponseEntity.ok(categories);
     }
 
     // Get a single category by id
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
-        Category category = categoryService.getCategoryById(id);
+    public ResponseEntity<CategoryResponse> getCategoryById(@PathVariable Long id) {
+        CategoryResponse category = categoryService.getCategoryById(id);
         return ResponseEntity.ok(category);
     }
 
     // Update a category
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category categoryDetails) {
-        Category updatedCategory = categoryService.updateCategory(id, categoryDetails);
+    public ResponseEntity<CategoryDto> updateCategory(@PathVariable Long id, @RequestBody CategoryDto categoryDto) {
+        CategoryDto updatedCategory = categoryService.updateCategory(id, categoryDto);
         return ResponseEntity.ok(updatedCategory);
     }
 
