@@ -156,7 +156,7 @@ public class MoneyMakerApplication {
 		Optional<Category> billsData = categoryRepo.findCategoryByNameAndUserAccountUserId("Bills", user.getUserId());
 		Category bills = billsData.get();
 		
-		Optional<Category> groceriesData = categoryRepo.findCategoryByNameAndUserAccountUserId("Bills", user.getUserId());
+		Optional<Category> groceriesData = categoryRepo.findCategoryByNameAndUserAccountUserId("Groceries", user.getUserId());
 		Category groceries = groceriesData.get();
 
 		
@@ -165,10 +165,12 @@ public class MoneyMakerApplication {
 	
 		
 		List<Transaction> transactions = Arrays.asList(
-				new Transaction(user, basicWallet, salary, 1000.0, LocalDate.now(), "Salary"),
-				new Transaction(user, basicWallet, groceries, 50.0, LocalDate.now(), "Groceries"),
-				new Transaction(user, basicWallet, gas, 100.0, LocalDate.now(), "Chevron"),
-				new Transaction(user, basicWallet, bills, 30.0, LocalDate.now(), "Hydro")
+				new Transaction(user, basicWallet, salary, 1000.0, LocalDate.of(2024,3,01), "March Salary 1"),
+				new Transaction(user, basicWallet, groceries, 50.0, LocalDate.of(2024, 3, 10), "Walmart"),
+				new Transaction(user, basicWallet, bills, 30.0, LocalDate.of(2024, 3, 15), "Hydro"),
+				new Transaction(user, basicWallet, salary, 1000.0, LocalDate.of(2024,3,28), "March Salary 2"),
+				new Transaction(user, basicWallet, groceries, 100.0, LocalDate.of(2024, 3, 30), "Costco"),
+				new Transaction(user, basicWallet, gas, 60.0, LocalDate.now(), "Chevron")
 				); 
 
 		transactionRepo.saveAll(transactions);
