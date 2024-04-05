@@ -1,5 +1,6 @@
 package com.example.moneyM.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,8 +51,14 @@ public class WalletService {
 		return walletResponse;
 	}
 
-	public List<WalletDto> getAllWallets() {
-		List<Wallet> walletList = walletRepository.findAll();
+	public List<WalletDto> getAllWallets(Long userId) {
+		List<Wallet> walletList = new ArrayList<Wallet>();
+//		List<Wallet> walletList = walletRepository.findAll();
+		if(userId != null) {
+			walletList = walletRepository.findByUserAccountUserId(userId);
+		} else {
+			walletList = walletRepository.findAll();
+		}
 		return walletList
 				.stream()
 				.map(wallet -> modelMapper.map(wallet, WalletDto.class))

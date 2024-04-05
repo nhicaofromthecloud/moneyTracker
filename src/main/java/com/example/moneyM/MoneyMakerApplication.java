@@ -116,7 +116,9 @@ public class MoneyMakerApplication {
 				new Category(user, "Utilities", "expense"),
 				new Category(user, "Bills", "expense"),
 				new Category(user, "Gas", "expense"),
-				new Category(user, "Groceries", "expense")
+				new Category(user, "Groceries", "expense"),
+				new Category(user, "Incoming Transfer", "income"),
+				new Category(user, "Outgoing Transfer", "expense")
 				); 
 
 		categoryRepo.saveAll(categories);

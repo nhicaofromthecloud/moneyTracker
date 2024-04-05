@@ -83,6 +83,24 @@ public class CategoryService {
 
 		return categoryResponse;
 	}
+	
+	//Get a category by ID
+		public CategoryResponse getCategoryByName(String name, Long userId) {
+			
+			Optional<Category> categoryData = categoryRepository.findCategoryByNameAndUserAccountUserId(name, userId);
+			Category category = new Category();
+			
+			if(categoryData.isPresent()) {
+				category = categoryData.get();
+			} else {
+				new RuntimeException("Category not found");
+			}
+			
+			//convert entity to DTO
+			CategoryResponse categoryResponse = modelMapper.map(category, CategoryResponse.class);
+
+			return categoryResponse;
+		}
 
 	//update Category
 	public CategoryDto updateCategory(Long id, CategoryDto categoryDto) {

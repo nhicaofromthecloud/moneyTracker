@@ -113,11 +113,12 @@ public class BudgetService {
 				.orElseThrow(() -> new RuntimeException("Category not found"));
 
 		// check if existing budget
-//		Optional<Budget> existingBudget = budgetRepository.findByCategoryCategoryId(budgetDto.getCategoryId());
+		Optional<Budget> existingBudget = budgetRepository.findByCategoryCategoryId(budgetDto.getCategoryId());
 
-//		if(existingBudget.isPresent()) {
-//			throw new RuntimeException("Cannot update category: Budget for this category already exists for the user");
-//		} 
+
+		if(budget.getCategory().getCategoryId() != budgetDto.getCategoryId() & existingBudget.isPresent()) {
+			throw new RuntimeException("Cannot update category: Budget for this category already exists for the user");
+		} 
 		
 		budget.setAmount(budgetDto.getAmount());
 		budget.setCategory(category);

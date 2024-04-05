@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.moneyM.dto.WalletDto;
@@ -34,8 +35,8 @@ public class WalletController {
 	};
 	
 	@GetMapping
-	public ResponseEntity<List<WalletDto>> getAllWallets() {
-		List<WalletDto> wallets = walletService.getAllWallets();
+	public ResponseEntity<List<WalletDto>> getAllWallets(@RequestParam(required = false) Long userId) {
+		List<WalletDto> wallets = walletService.getAllWallets(userId);
 		return ResponseEntity.ok(wallets);
 	}
 	

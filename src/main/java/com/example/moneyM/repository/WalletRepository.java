@@ -12,5 +12,6 @@ import com.example.moneyM.model.WalletType;
 public interface WalletRepository extends JpaRepository<Wallet, Long> {
 	
 	List<Wallet> findByType(WalletType type); 
+	List<Wallet> findByUserAccountUserId(Long userId);
 	
 }

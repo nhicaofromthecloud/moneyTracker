@@ -8,6 +8,7 @@ public class WalletDto {
 	private Long userId;
 	private String name;
 	private WalletType type;
+	private Long walletId;
 	private Double currentAmount;
 	
 	public Long getId() {
@@ -26,6 +27,14 @@ public class WalletDto {
 		this.userId = userId;
 	}
 	
+	public Long getWalletId() {
+		return walletId;
+	}
+
+	public void setWalletId(Long walletId) {
+		this.walletId = walletId;
+	}
+
 	public String getName() {
 		return name;
 	}

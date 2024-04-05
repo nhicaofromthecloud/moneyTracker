@@ -49,6 +49,13 @@ public class CategoryController {
         CategoryResponse category = categoryService.getCategoryById(id);
         return ResponseEntity.ok(category);
     }
+    
+    // Get a single category by name
+    @GetMapping("/categoryName") 
+    public ResponseEntity<CategoryResponse> getCategoryByName(@RequestParam(required = true) String name,@RequestParam(required = true) Long userId) {
+        CategoryResponse category = categoryService.getCategoryByName(name, userId);
+        return ResponseEntity.ok(category);
+    }
 
     // Update a category
     @PutMapping("/{id}")
