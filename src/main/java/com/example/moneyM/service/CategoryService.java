@@ -34,10 +34,14 @@ public class CategoryService {
 		UserAccount userAccount = userAccountRepository.findById(categoryDto.getUserId())
 				.orElseThrow(() -> new RuntimeException("User not found"));
 
-		Optional<Category> existingCategory = categoryRepository
-				.findByUserAccountUserIdAndNameContainingIgnoreCaseAndType(categoryDto.getUserId(), 
-						categoryDto.getName(), categoryDto.getType());
+//		Optional<Category> existingCategory = categoryRepository
+//				.findByUserAccountUserIdAndNameContainingIgnoreCaseAndType(categoryDto.getUserId(), 
+//						categoryDto.getName(), categoryDto.getType());
 
+		 // Check if category already exists for the user
+//	    Optional<Category> existingCategory = categoryRepository.findByUserAccountAndNameIgnoreCaseAndType(userAccount, categoryDto.getName(), categoryDto.getType());
+	    Optional<Category> existingCategory = categoryRepository.findByUserAccountAndNameIgnoreCaseAndType(userAccount, categoryDto.getName(), categoryDto.getType()); 
+	    
 		if (existingCategory.isPresent()) {
 			throw new RuntimeException("Category already exists for the user");
 		}
@@ -85,10 +89,12 @@ public class CategoryService {
 		// Check if the category exists
 		Category category = categoryRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Category not found"));
+		UserAccount userAccount = userAccountRepository.findById(categoryDto.getUserId())
+				.orElseThrow(() -> new RuntimeException("User not found"));
 
 		// check for existing category
 		Optional<Category> existingCategory = categoryRepository
-				.findByUserAccountUserIdAndNameContainingIgnoreCaseAndType(categoryDto.getUserId(), 
+				.findByUserAccountAndNameIgnoreCaseAndType(userAccount, 
 						categoryDto.getName(), categoryDto.getType());
 		
 		if(existingCategory.isPresent()) {
