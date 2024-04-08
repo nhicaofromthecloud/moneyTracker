@@ -107,18 +107,12 @@ public class BudgetService {
 	//Update a budget
 	public BudgetDto updateBudget(Long id, BudgetDto budgetDto) {
 		Budget budget = budgetRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Budget not found"));
+				.orElseThrow(() -> new RuntimeException("Budget already defined, please edit the existing one"));
 
 		Category category = categoryRepository.findById(budgetDto.getCategoryId())
 				.orElseThrow(() -> new RuntimeException("Category not found"));
 
-		// check if existing budget
-//		Optional<Budget> existingBudget = budgetRepository.findByCategoryCategoryId(budgetDto.getCategoryId());
 
-//		if(existingBudget.isPresent()) {
-//			throw new RuntimeException("Cannot update category: Budget for this category already exists for the user");
-//		} 
-		
 		budget.setAmount(budgetDto.getAmount());
 		budget.setCategory(category);
 		budget.setTimeFrame(budgetDto.getTimeFrame());
