@@ -9,6 +9,7 @@ public class TransactionResponse {
 	private String description;
 	private LocalDate date;
 	private CategoryDto category;
+	private Long walletId;
 
 	public Long getId() {
 		return id;
@@ -49,4 +50,14 @@ public class TransactionResponse {
 	public void setCategory(CategoryDto category) {
 		this.category = category;
 	}
+
+	public Long getWalletId() {
+		return walletId;
+	}
+
+	public void setWalletId(Long walletId) {
+		this.walletId = walletId;
+	}
+	
+	
 }

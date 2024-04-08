@@ -12,6 +12,8 @@ public class GoalResponse {
 	private String startDate;
 	
 	private String targetDate;
+	
+	private Long walletId;
 
 	public Long getId() {
 		return id;
@@ -59,6 +61,14 @@ public class GoalResponse {
 
 	public void setTargetDate(String targetDate) {
 		this.targetDate = targetDate;
+	}
+
+	public Long getWalletId() {
+		return walletId;
+	}
+
+	public void setWalletId(Long walletId) {
+		this.walletId = walletId;
 	}
 	
 }

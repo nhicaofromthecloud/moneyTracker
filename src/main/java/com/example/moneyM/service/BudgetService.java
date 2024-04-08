@@ -112,7 +112,6 @@ public class BudgetService {
 		Category category = categoryRepository.findById(budgetDto.getCategoryId())
 				.orElseThrow(() -> new RuntimeException("Category not found"));
 
-
 		budget.setAmount(budgetDto.getAmount());
 		budget.setCategory(category);
 		budget.setTimeFrame(budgetDto.getTimeFrame());
