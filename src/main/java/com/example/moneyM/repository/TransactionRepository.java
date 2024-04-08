@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.moneyM.model.Category;
@@ -21,6 +23,10 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>{
 	
 	List<Transaction> findAllByUserAccountUserIdAndDateBetween(Long userId, 
 			LocalDate startDate, LocalDate endDate);
+	
+	
+	@Query(value = "SELECT t FROM Transaction t  WHERE t.userAccount.userId = :userId AND t.wallet.walletId = :walletId")
+	List<Transaction> findByUserIdAndWalletId(@Param("userId") Long userId, @Param("walletId") Long walletId);
 	
 // customized query sample
 //	@Query(value = "SELECT t FROM Transaction t WHERE t.userAccount.userId = :id AND t.date BETWEEN :startDate AND :endDate")

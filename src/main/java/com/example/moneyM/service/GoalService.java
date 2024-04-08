@@ -4,10 +4,12 @@ import com.example.moneyM.dto.GoalDto;
 import com.example.moneyM.dto.GoalResponse;
 import com.example.moneyM.dto.WalletDto;
 import com.example.moneyM.model.Goal;
+import com.example.moneyM.model.Transaction;
 import com.example.moneyM.model.UserAccount;
 import com.example.moneyM.model.Wallet;
 import com.example.moneyM.model.WalletType;
 import com.example.moneyM.repository.GoalRepository;
+import com.example.moneyM.repository.TransactionRepository;
 import com.example.moneyM.repository.UserAccountRepository;
 
 import org.modelmapper.ModelMapper;
@@ -34,12 +36,16 @@ public class GoalService {
 
 	@Autowired
 	private UserAccountRepository userAccountRepository;
+	
+	@Autowired
+	private TransactionRepository transactionRepository;
 
 
 
-	public GoalService(GoalRepository goalRepository, UserAccountRepository userAccountRepository) {
+	public GoalService(GoalRepository goalRepository, UserAccountRepository userAccountRepository, TransactionRepository transactionRepository) {
 		this.goalRepository = goalRepository;
 		this.userAccountRepository = userAccountRepository;
+		this.transactionRepository = transactionRepository;
 	}
 
 	// Create a new goal
@@ -86,6 +92,16 @@ public class GoalService {
 		} else {
 			goalList = goalRepository.findAll();
 		}	
+		
+		// Iterate over the goalList to calculate the current amount for each goal
+	    for (Goal goal : goalList) {
+	        Long walletId = goal.getWallet().getId();
+	        List<Transaction> transactions = transactionRepository.findByUserIdAndWalletId(userId, walletId);
+	        double totalAmount = transactions.stream()
+	                                        .mapToDouble(Transaction::getAmount)
+	                                        .sum();
+	        goal.setCurrentAmount(totalAmount);
+	    }
 				
 		return goalList
 				.stream()
